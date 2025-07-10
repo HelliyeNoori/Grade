@@ -92,7 +92,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 25px; /* فاصله بیشتر بین کارت‌های محتوا */
+    gap: 25px; /* فاصله بین کارت‌های محتوا */
 }
 
 .card {
@@ -233,26 +233,27 @@ button:active {
 
 /* --- استایل جدول --- */
 .table-responsive {
-    overflow-x: auto;
+    overflow-x: auto; /* این خاصیت، اسکرول افقی را در صورت لزوم ایجاد می‌کند. */
 }
 
 table {
-    width: 100%;
+    width: 100%; /* حتماً عرض 100% برای جدول */
     border-collapse: collapse;
     margin-top: 25px; /* فاصله بیشتر */
     background-color: #ffffff;
     border-radius: 10px; /* گوشه‌های گردتر */
-    overflow: hidden;
+    overflow: hidden; /* برای اینکه گوشه‌های گرد اعمال شود */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* سایه نرم‌تر */
+    table-layout: fixed; /* **اضافه شد: برای توزیع یکنواخت عرض ستون‌ها** */
 }
 
 th,
 td {
     border: 1px solid #e0e6ec; /* خطوط جدول بسیار روشن */
-    padding: 14px 10px; /* پدینگ بیشتر */
+    padding: 8px 6px; /* **تغییر یافت: کاهش پدینگ برای فشرده‌تر شدن** */
     text-align: right;
-    white-space: nowrap;
-    font-size: 0.95em; /* اندازه فونت کمی کوچک‌تر برای خانه‌های جدول */
+    white-space: nowrap; /* **حفظ شد: برای جلوگیری از شکستن متن در ستون‌ها** */
+    font-size: 0.9em; /* **تغییر یافت: اندازه فونت کمی کوچک‌تر برای خانه‌های جدول** */
 }
 
 th {
@@ -262,7 +263,7 @@ th {
     position: sticky;
     top: 0;
     z-index: 10;
-    font-size: 1em;
+    font-size: 0.95em; /* **تغییر یافت: اندازه فونت هدر** */
 }
 
 tr:nth-child(even) {
@@ -272,6 +273,43 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #eef7ff; /* آبی روشن‌تر هنگام هاور */
 }
+
+/* **اضافه شد: کاهش عرض ستون‌های عددی و کوتاه** */
+table th:nth-child(2), /* احراز هویت */
+table td:nth-child(2),
+table th:nth-child(3), /* چت */
+table td:nth-child(3),
+table th:nth-child(4), /* ورودی */
+table td:nth-child(4),
+table th:nth-child(5), /* خروجی */
+table td:nth-child(5),
+table th:nth-child(6), /* Talk Time */
+table td:nth-child(6),
+table th:nth-child(7), /* احراز هویت (ماهانه) */
+table td:nth-child(7),
+table th:nth-child(9), /* امتیاز نهایی */
+table td:nth-child(9),
+table th:nth-child(10), /* گرید */
+table td:nth-child(10),
+table th:nth-child(11), /* حذف */
+table td:nth-child(11) {
+    width: 60px; /* عرض ثابت برای ستون‌های کوتاه */
+    max-width: 80px; /* حداکثر عرض برای اطمینان */
+    text-align: center; /* وسط‌چین کردن محتوای این ستون‌ها */
+}
+
+/* عرض بیشتر برای ستون نام کارشناس */
+table th:nth-child(1),
+table td:nth-child(1) {
+    width: 120px;
+}
+
+/* عرض برای ستون فعالیت مفید (کمی بیشتر از بقیه اعداد) */
+table th:nth-child(8),
+table td:nth-child(8) {
+    width: 80px;
+}
+
 
 /* --- استایل گریدها --- */
 .grade-A {
@@ -323,6 +361,53 @@ small.info-text {
     font-style: italic;
     font-size: 0.85em; /* اندازه کوچکتر */
 }
+
+/* --- استایل دکمه حذف --- */
+.delete-button {
+    background-color: #e74c3c; /* قرمز برای دکمه حذف */
+    color: white;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    width: auto; /* برای اینکه عرض کامل سلول رو نگیره */
+    display: inline-flex; /* برای وسط قرار گرفتن آیکون */
+    align-items: center;
+    justify-content: center;
+    box-shadow: none; /* حذف سایه دکمه اصلی */
+}
+
+.delete-button:hover {
+    background-color: #c0392b; /* قرمز تیره‌تر هنگام هاور */
+    transform: translateY(-1px);
+    box-shadow: none;
+}
+
+.delete-button:active {
+    transform: translateY(0);
+}
+
+/* --- استایل نمودار --- */
+.chart-container {
+    position: relative; /* برای کنترل بهتر اندازه canvas */
+    height: 400px; /* ارتفاع ثابت برای نمودار */
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.chart-summary {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #555;
+    background-color: #f0f8ff; /* پس‌زمینه آبی روشن برای خلاصه */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #cceeff;
+}
+
 
 /* --- واکنش‌گرایی (Responsive Design) --- */
 @media (max-width: 768px) {
@@ -383,7 +468,42 @@ small.info-text {
     }
 
     th, td {
-        padding: 10px 5px;
-        font-size: 0.85em;
+        padding: 8px 4px; /* **تغییر یافت: کاهش بیشتر پدینگ در موبایل** */
+        font-size: 0.8em; /* **تغییر یافت: اندازه فونت کوچکتر در موبایل** */
+    }
+
+    /* **جدید: تنظیم عرض ستون‌ها در حالت موبایل** */
+    table th:nth-child(2),
+    table td:nth-child(2),
+    table th:nth-child(3),
+    table td:nth-child(3),
+    table th:nth-child(4),
+    table td:nth-child(4),
+    table th:nth-child(5),
+    table td:nth-child(5),
+    table th:nth-child(6),
+    table td:nth-child(6),
+    table th:nth-child(7),
+    table td:nth-child(7),
+    table th:nth-child(9),
+    table td:nth-child(9),
+    table th:nth-child(10),
+    table td:nth-child(10),
+    table th:nth-child(11),
+    table td:nth-child(11) {
+        width: 50px; /* عرض ثابت کوچک‌تر */
+        max-width: 60px;
+    }
+    table th:nth-child(1),
+    table td:nth-child(1) {
+        width: 100px;
+    }
+    table th:nth-child(8),
+    table td:nth-child(8) {
+        width: 70px;
+    }
+
+    .chart-container {
+        height: 300px; /* ارتفاع کمتر برای موبایل */
     }
 }
