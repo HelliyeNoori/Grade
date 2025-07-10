@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد گریدینگ کارشناسان</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>📊 داشبورد گریدینگ کارشناسان پشتیبانی</h1>
+        </header>
+
+        <main class="dashboard-main">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="#registerAgentSection" class="active">ثبت کارشناس</a></li>
+                        <li><a href="#calculateGradeSection">محاسبه گرید</a></li>
+                        <li><a href="#gradingTableSection">جدول گریدینگ</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <section class="content">
+                <div id="registerAgentSection" class="card active-section">
+                    <h2>➕ ثبت کارشناس جدید</h2>
+                    <div class="form-group">
+                        <label for="agentName">نام کارشناس:</label>
+                        <input type="text" id="agentName" placeholder="مثال: علی احمدی" required>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="registerIsIdentityVerifier">
+                        <label for="registerIsIdentityVerifier">کارشناس احراز هویت است؟</label>
+                    </div>
+                    <button id="registerAgentButton">ثبت کارشناس جدید <span class="icon">✅</span></button>
+                </div>
+
+                <div id="calculateGradeSection" class="card">
+                    <h2>🔢 محاسبه گرید و تخصیص بودجه</h2>
+                    <div class="form-group">
+                        <label for="agentSelect">انتخاب کارشناس:</label>
+                        <select id="agentSelect" required>
+                            <option value="">-- یک کارشناس را انتخاب کنید --</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <h3>📈 ورودی‌های کلی تیم (ماهانه)</h3>
+                    <p class="info-text">این مقادیر برای **کل تیم شما در طول یک ماه** محاسبه می‌شوند.</p>
+                    <div class="form-group">
+                        <label for="totalChatsAcrossAllAgents">تعداد کل چت‌های **ماهانه** (تیم):</label>
+                        <input type="number" id="totalChatsAcrossAllAgents" value="0" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="averageChatDurationPerAgent">زمان فعالیت چت فرضی برای کل تیم در **ماه** (ساعت):</label>
+                        <input type="number" id="averageChatDurationPerAgent" value="0" min="0" step="0.1" required>
+                        <small class="info-text">مثال: اگر 10,000 چت با متوسط 5 دقیقه دارید، (10000 * 5) / 60 = 833.33 ساعت</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="totalTalkTimeInShiftHours">کل زمان مکالمه **ماهانه** (تیم، ساعت):</label>
+                        <input type="number" id="totalTalkTimeInShiftHours" value="0" min="0" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="averageIdentityVerificationDurationMinutes">متوسط زمان لازم برای هر احراز هویت (دقیقه):</label>
+                        <input type="number" id="averageIdentityVerificationDurationMinutes" value="5" min="0" step="0.1" required>
+                    </div>
+                    <hr>
+                    <h3>👤 ورودی‌های عملکرد کارشناس انتخابی (ماهانه)</h3>
+                    <p class="info-text">این مقادیر برای **کارشناس انتخاب شده در طول ماه** محاسبه می‌شوند.</p>
+                    <div class="form-group">
+                        <label for="shiftType">نوع شیفت (برای اعمال ضریب سختی شیفت):</label>
+                        <select id="shiftType">
+                            <option value="morning">صبح (09:00 - 17:15)</option>
+                            <option value="evening">عصر (17:15 - 01:30)</option>
+                            <option value="twilight">بامداد (01:30 - 09:00)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chatCount">تعداد چت‌های کارشناس (ماهانه):</label>
+                        <input type="number" id="chatCount" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="incomingCallCount">تعداد تماس‌های ورودی کارشناس (ماهانه):</label>
+                        <input type="number" id="incomingCallCount" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="outgoingCallCount">تعداد تماس‌های خروجی کارشناس (ماهانه):</label>
+                        <input type="number" id="outgoingCallCount" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="agentTalkTimeHours">ساعات مکالمه کارشناس (Talk Time - ماهانه):</label>
+                        <input type="number" id="agentTalkTimeHours" value="0" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="identityVerificationCount">تعداد احراز هویت کارشناس (ماهانه):</label>
+                        <input type="number" id="identityVerificationCount" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalBudget">کل بودجه برای تخصیص (تومان):</label>
+                        <input type="number" id="totalBudget" value="10000000" min="0" step="100000">
+                    </div>
+                    <button id="calculateGradeButton">محاسبه گرید و بودجه <span class="icon">📈</span></button>
+                    <div id="calculationResult" class="result-box"></div>
+                </div>
+
+                <div id="gradingTableSection" class="card">
+                    <h2>📊 جدول گریدینگ کارشناسان</h2>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نام کارشناس</th>
+                                    <th>احراز هویت</th>
+                                    <th>چت (ماهانه)</th>
+                                    <th>ورودی (ماهانه)</th>
+                                    <th>خروجی (ماهانه)</th>
+                                    <th>Talk Time (ماهانه)</th>
+                                    <th>احراز هویت (ماهانه)</th>
+                                    <th>فعالیت مفید (ساعت)</th>
+                                    <th>امتیاز نهایی</th>
+                                    <th>گرید</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gradingTableBody">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Smooth scrolling for sidebar links
+        document.querySelectorAll('.sidebar ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelectorAll('.sidebar ul li a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.remove('active-section');
+                });
+                document.querySelector(this.getAttribute('href')).classList.add('active-section');
+            });
+        });
+    </script>
+</body>
+
+</html>
